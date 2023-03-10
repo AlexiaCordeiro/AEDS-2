@@ -14,21 +14,20 @@ public class ArvoreBinaria  {
 
     public ArvoreBinaria(){
         this.raiz = null;
-        vazio = true;
     }
     private No insere(Item reg, No p) throws MSGerro {
         //percorrer até achar um ponteiro nulo ou achar um item igual ao item a ser inserido
         if(p != null){
-            if(reg.compara(p.reg) > 0){
+            if(reg.compara(p.reg) == 1){
                 //pular para direita e chamar recursivamente pesquisa
                 System.out.println("Salto para a direita");
-                p.dir = insere(reg, p.dir);
+                p.dir = this.insere(reg, p.dir);
             }
 
             //esquerda --> menor que
-            else if(reg.compara(p.reg) > 0){
+            else if(reg.compara(p.reg) == -1){
                 System.out.println("Salto para a esquerda");
-                p.esq = insere(reg, p.esq);
+                p.esq = this.insere(reg, p.esq);
             }
             //igual
             else{
@@ -36,13 +35,15 @@ public class ArvoreBinaria  {
                 throw new MSGerro("OBJETO JÁ EXISTENTE");
             }
         }
-        //inserir
-        //criar no
-        p = new No();
-        //adicionar item
-        p.reg = reg;
-        //configuarar filhos
-        p.esq = null; p.dir = null;
+        else{
+            //inserir
+            //criar no
+            p = new No();
+            //adicionar item
+            p.reg = reg;
+            //configuarar filhos
+            p.esq = null; p.dir = null;
+        }
 
         return p;
     }
@@ -50,16 +51,16 @@ public class ArvoreBinaria  {
     private Item pesquisa(Item reg, No p){
         if(p != null){
             //direita --> maior que
-            if(reg.compara(p.reg) > 0){
+            if(reg.compara(p.reg) == 1){
                 //pular para direita e chamar recursivamente pesquisa
                 System.out.println("Salto para a direita");
-                return pesquisa(reg, p.dir);
+                return this.pesquisa(reg, p.dir);
             }
 
             //esquerda --> menor que
-            else if(reg.compara(p.reg) > 0){
+            else if(reg.compara(p.reg) == -1){
                 System.out.println("Salto para a esquerda");
-                return pesquisa(reg, p.esq);
+                return this.pesquisa(reg, p.esq);
             }
             //igual
             else{
@@ -71,20 +72,11 @@ public class ArvoreBinaria  {
     }
 
     public void adminInsere(Item r) throws MSGerro {
-
         //primeiro item
-        if(vazio){
-            this.raiz = new No();
-            //adicionar item
-            raiz.reg = r;
-            //configuarar filhos
-            raiz.esq = null; raiz.dir = null;
-        }
-        //a partir do segundo item
-        else{
-            raiz = this.insere(r, raiz);
-        }
 
+        raiz = this.insere(r, raiz);
+
+        System.out.println("Inserido");
     }
 
     public boolean adminPesquisa(Item r) throws MSGerro {
